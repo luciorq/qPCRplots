@@ -1,0 +1,28 @@
+Package: qPCRplots
+Type: Package
+Title: Graphical Visualization of qPCR Experiments
+Version: 0.1.0
+Authors@R: 
+  person("Lucio", "Rezende Queiroz", 
+         email = "luciorqueiroz@gmail.com",
+         role = c("aut", "cre"),
+         comment = c(ORCID="0000-0002-6090-1834")
+  )
+Description: Shiny app intended in helping process and visualize 
+             output from quantitative polymerase chain reaction experiments.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    tidyr,
+    dplyr,
+    stringr,
+    readxl,
+    writexl,
+    readr,
+    purrr,
+    ggplot2,
+    ggrepel,
+    ggpubr,
+    viridis,
+    fs
