@@ -15,7 +15,7 @@ options(na.action = na.warn)
 options(warn = -1)
 
 # Define server logic required by the app
-qpcr_server <- function(input, output, session) {
+server <- function(input, output, session) {
   #This function is responsible for loading in the first selected file
   filedata1 <- reactive({
     inFile <- input$file1
@@ -423,4 +423,4 @@ qpcr_server <- function(input, output, session) {
 
 }
 
-qpcr_server
+server

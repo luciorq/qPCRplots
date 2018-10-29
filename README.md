@@ -1,7 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# qPCRplots
+# qPCRplots <img src="man/figures/logo.png" align="right" height=140/>
+
+[![Travis build
+status](https://travis-ci.com/luciorq/qPCRplots.svg?branch=master)](https://travis-ci.com/luciorq/qPCRplots)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/luciorq/qPCRplots?branch=master&svg=true)](https://ci.appveyor.com/project/luciorq/qPCRplots)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/qPCRplots)](https://cran.r-project.org/package=qPCRplots)
+[![Coverage
+status](https://codecov.io/gh/luciorq/qPCRplots/branch/master/graph/badge.svg)](https://codecov.io/github/luciorq/qPCRplots?branch=master)
 
 ## Overview
 
@@ -23,7 +32,7 @@ The development version can be installed from
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("luciorq/txomics")
+remotes::install_github("luciorq/qPCRplots")
 ```
 
 ## Example

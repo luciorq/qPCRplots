@@ -5,7 +5,7 @@
 library(shiny)
 
 # Define UI for application
-qpcr_ui <- fluidPage(
+ui <- fluidPage(
   titlePanel("qPCR Plots"),
   sidebarLayout(
     sidebarPanel(tags$head(
@@ -61,4 +61,4 @@ qpcr_ui <- fluidPage(
   )
 )
 
-qpcr_ui
+ui

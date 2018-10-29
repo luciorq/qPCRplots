@@ -25,7 +25,8 @@ Imports:
     ggrepel,
     ggpubr,
     viridis,
-    fs
+    fs,
+    shiny
 Suggests: 
     covr
 RoxygenNote: 6.1.0
