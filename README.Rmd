@@ -38,7 +38,7 @@ The development version can be installed from [GitHub](https://github.com/) with
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("luciorq/txomics")
+remotes::install_github("luciorq/qPCRplots")
 ```
 
 ## Example
