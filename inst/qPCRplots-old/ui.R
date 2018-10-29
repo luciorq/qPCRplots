@@ -54,7 +54,9 @@ ui <- fluidPage(
                  selectInput(inputId = "glm_random", label = "Select random effect for GLM:",
                              choices =  c(" "), selected = " "),
                  tableOutput('glm_stats_table')),
-        tabPanel('Heatmap',  checkboxInput("heatmap_1_cluster", "Apply clustering", FALSE),plotOutput('heatmap_1'),
+        tabPanel('Heatmap',
+                 checkboxInput("heatmap_1_cluster", "Apply clustering", FALSE),
+                 plotOutput('heatmap_1'),
                  downloadButton('download_heatmap_1',"Download Figure"))
       )
     )
