@@ -57,8 +57,6 @@ launch_qpcrplots()
 ```{r df, eval = TRUE, echo = FALSE}
 df <- dplyr::slice(ggplot2::diamonds, 1:300)
 df <- dplyr::select(df, cut, carat, price)
-df <- dplyr::mutate(df, price = as.numeric(price))
-df <- dplyr::mutate(df, cut = as.character(cut))
 #qPCRplots::plot_boxplot(df)
 ```
 

@@ -1,7 +1,7 @@
 Package: qPCRplots
 Type: Package
 Title: Graphical Visualization of qPCR Experiments
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
   person("Lucio", "Rezende Queiroz", 
          email = "luciorqueiroz@gmail.com",

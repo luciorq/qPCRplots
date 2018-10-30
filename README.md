@@ -49,7 +49,6 @@ launch_qpcrplots()
 
 ``` r
 plot_boxplot(df)
-#> Warning: Removed 1 rows containing missing values (geom_hline).
 #> Warning: Removed 300 rows containing missing values (geom_point).
 #> Warning: Removed 9 rows containing missing values (geom_signif).
 ```

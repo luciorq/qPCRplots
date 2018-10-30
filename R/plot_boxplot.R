@@ -20,20 +20,23 @@ plot_boxplot <- function(data,
                          cutoff = "-7",
                          log_transform = FALSE,
                          point_size = 2,
-                         text_size = 16){
-  # data <- delta_ct_df
+                         text_size = 16) {
   set.seed(42)
   if (is.null(data)) {
-    plot_boxplot <- ggplot2::ggplot()
-    return(plot_boxplot)
+    plot_1 <- ggplot2::ggplot()
+    return(plot_1)
   }
   text_size <- as.numeric(text_size)
   point_size <- as.numeric(point_size)
   cutoff <- as.numeric(cutoff)
   column_names <- names(data)
+
   plot_data <- data %>%
     dplyr::rename(group = !!as.name(column_names[1])) %>%
-    dplyr::rename(values = !!as.name(column_names[3]))
+    dplyr::rename(values = !!as.name(column_names[3])) %>%
+    dplyr::mutate(values = as.numeric(values)) %>%
+    dplyr::mutate(group = as.character(group))
+
 
   if (isTRUE(log_transform)) {
     plot_data <- plot_data %>%
@@ -42,7 +45,7 @@ plot_boxplot <- function(data,
 
   plot_data <- plot_data %>%
     dplyr::mutate(values_boxplot = dplyr::if_else(values > cutoff, values, NA_real_)) %>%
-    dplyr::mutate(values_undetected = dplyr::if_else(values <= cutoff, values, NA_real_))
+    dplyr::mutate(values_undetected = dplyr::if_else(values <= cutoff, cutoff, NA_real_))
 
   group_levels <- plot_data %>%
     dplyr::pull(group) %>%
@@ -66,7 +69,10 @@ plot_boxplot <- function(data,
     group_length <- 3
   }
   color_palette <- RColorBrewer::brewer.pal(n = group_length, name = "Set2")
-  breaks_y <- base::pretty(plot_data$values)
+
+  y_axis_min <- cutoff
+  y_axis_max <- base::max(plot_data$values)  * 1.05
+  breaks_y <- base::pretty(c(y_axis_min, y_axis_max))
 
   plot_data <- plot_data %>%
     dplyr::mutate(
@@ -74,7 +80,7 @@ plot_boxplot <- function(data,
                      levels = c(control_group,
                                 group_levels[!(group_levels %in% control_group)]))
     )
-  plot_boxplot <- plot_data %>%
+  plot_1 <- plot_data %>%
     ggplot2::ggplot( ggplot2::aes(x = group, y = values_boxplot)) +
     ggplot2::geom_hline(
       yintercept = cutoff, alpha = 0.3
@@ -109,10 +115,10 @@ plot_boxplot <- function(data,
     ggplot2::xlab("") +
     ggplot2::ylab("RNA levels") +
     ggplot2::labs(color = "") +
-    #plot_boxplot <- plot_boxplot +
+    #plot_1 <- plot_1 +
     ggpubr::stat_compare_means(
       method = "wilcox.test",
       comparisons = statistics_comparison
     )
-  plot_boxplot
+  plot_1
 }
