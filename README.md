@@ -40,8 +40,21 @@ remotes::install_github("luciorq/qPCRplots")
 Execute the Shiny App
 
 ``` r
-## launch_qpcrplots()
+library(qPCRplots)
 ```
+
+``` r
+launch_qpcrplots()
+```
+
+``` r
+plot_boxplot(df)
+#> Warning: Removed 1 rows containing missing values (geom_hline).
+#> Warning: Removed 300 rows containing missing values (geom_point).
+#> Warning: Removed 9 rows containing missing values (geom_signif).
+```
+
+<img src="man/figures/README-boxplot-1.png" width="100%" />
 
 -----
 

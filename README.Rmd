@@ -45,8 +45,25 @@ remotes::install_github("luciorq/qPCRplots")
 
 Execute the Shiny App
 
-```{r example}
-## launch_qpcrplots()
+```{r}
+library(qPCRplots)
+```
+
+
+```{r example, eval = FALSE}
+launch_qpcrplots()
+```
+
+```{r df, eval = TRUE, echo = FALSE}
+df <- dplyr::slice(ggplot2::diamonds, 1:300)
+df <- dplyr::select(df, cut, carat, price)
+df <- dplyr::mutate(df, price = as.numeric(price))
+df <- dplyr::mutate(df, cut = as.character(cut))
+#qPCRplots::plot_boxplot(df)
+```
+
+```{r boxplot, eval = TRUE}
+plot_boxplot(df)
 ```
 
 ----
