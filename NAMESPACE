@@ -2,7 +2,6 @@
 
 export(app_server)
 export(app_ui)
-export(group_comparisons)
 export(launch_qpcrplots)
 export(plot_boxplot)
 importFrom(dplyr,"%>%")

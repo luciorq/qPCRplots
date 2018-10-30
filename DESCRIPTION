@@ -26,7 +26,9 @@ Imports:
     ggpubr,
     viridis,
     fs,
-    shiny
+    shiny,
+    shinydashboard,
+    RColorBrewer
 Suggests: 
     covr
 RoxygenNote: 6.1.0

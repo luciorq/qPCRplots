@@ -1,7 +1,7 @@
 # qPCRplots 0.1.1
 
-* RNA level plots working
-* Statistical comparison implemented
+* RNA level plots working.
+* Statistical comparison implemented.
 
 # qPCRplots 0.1.0
 

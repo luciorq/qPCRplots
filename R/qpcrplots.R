@@ -13,4 +13,10 @@ NULL
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
 ## reference: https://github.com/jennybc/googlesheets/blob/master/R/googlesheets.R
-if (getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(
+    base::c(".", "group", "values", "values_boxplot",
+      "values_undetected"
+    )
+  )
+}

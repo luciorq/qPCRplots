@@ -1,3 +1,11 @@
+#' qPCRplots Shiny Server
+#'
+#' This is the server side logic of a Shiny web application.
+#' Define server logic required by the app.
+#'
+#' @param input User inputs.
+#' @param output Application outputs.
+#' @param session Session status.
 #' @export
 app_server <- function(input, output, session) {
 
@@ -25,7 +33,8 @@ app_server <- function(input, output, session) {
       notch_value = input$plot_1_notch,
       cutoff = input$plot_1_threshold,
       log_transform = input$plot_1_log_transform,
-      point_size = input$plot_1_point_size
+      point_size = input$plot_1_point_size,
+      text_size = input$plot_1_text_size
     )
   })
 
@@ -35,31 +44,49 @@ app_server <- function(input, output, session) {
       ggplot2::ggsave(
         file,
         plot = qPCRplots::plot_boxplot(
-        data = delta_ct_df,
+        data = readxl::read_excel(input$file_deltaCT$datapath),
         control_group = input$plot_1_control_group,
         notch_value = input$plot_1_notch,
         cutoff = input$plot_1_threshold,
         log_transform = input$plot_1_log_transform,
-        point_size = input$plot_1_point_size
+        point_size = input$plot_1_point_size,
+        text_size = input$plot_1_text_size
       ), device = "pdf")
     }
   )
 
 }
 
+#' Delta Ct Boxplot
+#'
+#' Plots boxplot and statistics from qPCR experiments.
+#'
+#' @param data Tibble or data frame with delta Ct values and
+#'   sample groups info
+#' @param control_group Sample group used to compare statistics.
+#'   This group is used as the first group to plot.
+#' @param notch_value If TRUE, make a notched box plot,
+#'   instead of normal boxplot. Default = FALSE.
+#' @param cutoff Detection threshold for qPCR experiment.
+#' @param log_transform If TRUE,log10-transform the delta Ct values.
+#'   Default = FALSE.
+#' @param point_size Value for the size of plot elements.
+#' @param text_size Value for the size of plot textual elements.
 #' @export
 plot_boxplot <- function(data,
                          control_group = NULL,
                          notch_value = FALSE,
                          cutoff = "-7",
                          log_transform = FALSE,
-                         point_size = 2){
+                         point_size = 2,
+                         text_size = 16){
   # data <- delta_ct_df
   set.seed(42)
   if (is.null(data)) {
     plot_1 <- ggplot2::ggplot()
     return(plot_1)
   }
+  text_size <- as.numeric(text_size)
   point_size <- as.numeric(point_size)
   cutoff <- as.numeric(cutoff)
   column_names <- names(data)
@@ -79,14 +106,18 @@ plot_boxplot <- function(data,
   group_levels <- plot_data %>%
     dplyr::pull(group) %>%
     base::unique()
+  if (is.null(control_group)) {
+    control_group <- group_levels[1]
+  }
   if (isTRUE(control_group == " ")) {
     control_group <- group_levels[1]
   }
-
+  group_sans_control <- group_levels[!(group_levels %in% control_group)]
   if (isTRUE(length(group_levels) > 2)) {
-    statistics_comparison <- qPCRplots::group_comparisons(group_levels, control_group)
+    statistics_comparison <- group_sans_control %>%
+      purrr::map(~{c(control_group, .x)}, control_group)
   } else {
-    statistics_comparison <- list(c(control_group, group_levels[!(group_levels %in% control_group)]))
+    statistics_comparison <- list(c(control_group, group_sans_control))
   }
 
   group_length <- length(group_levels)
@@ -109,10 +140,10 @@ plot_boxplot <- function(data,
     ) +
     ggplot2::stat_boxplot(
       ggplot2::aes(y = values_boxplot, color = group),
-      geom = "errorbar", width = point_size/50
+      geom = "errorbar", width = point_size/45
     ) +
     ggplot2::geom_boxplot(
-      ggplot2::aes(y = values_boxplot, color = group), width = point_size/8,
+      ggplot2::aes(y = values_boxplot, color = group), width = point_size/6,
       notch = notch_value,
       outlier.colour = "white"
     ) +
@@ -130,7 +161,7 @@ plot_boxplot <- function(data,
       breaks = breaks_y, limits = base::range(breaks_y)
     ) +
     ggplot2::scale_color_manual(values = color_palette) +
-    ggpubr::theme_pubr() +
+    ggpubr::theme_pubr(base_size = text_size) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(
       angle = 45, hjust = 1, vjust = 1
     )) +
@@ -145,11 +176,3 @@ plot_boxplot <- function(data,
 
   plot_1
 }
-
-#' @export
-# group_levels <- c("grupo2", "grupo1", "grupo3"); control_group <- "grupo3"
-group_comparisons <- function(group_levels, control_group) {
-  group_sans_control <- group_levels[!(group_levels %in% control_group)]
-  purrr::map(group_sans_control, ~{c(control_group, .x)}, control_group)
-}
-

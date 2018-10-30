@@ -1,3 +1,8 @@
+#' qPCRplots Shiny UI
+#'
+#' This is the user-interface definition of a Shiny web application.
+#' Define UI for application.
+#'
 #' @export
 app_ui <- function() {
   #library(shinydashboard)
@@ -6,7 +11,7 @@ app_ui <- function() {
     shinydashboard::dashboardSidebar(
       shinydashboard::sidebarMenu(
         shinydashboard::menuItem(
-          "deltaCT plots", tabName = "deltaCTplot", icon = shiny::icon("chart-bar")
+          "deltaCT plots", tabName = "deltaCTplot", icon = shiny::icon("fa-chart-bar")
         ),
         shinydashboard::menuItem("About", tabName = "about",
                                  icon = shiny::icon("info"))
@@ -46,6 +51,12 @@ app_ui <- function() {
                 label = "Dot size",
                 min = 1, max = 10, value = 2,
                 step = 1, width = "90%"
+              ),
+              shiny::sliderInput(
+                inputId = "plot_1_text_size",
+                label = "Text size",
+                min = 8, max = 24, value = 16,
+                step = 2, width = "90%"
               ),
             shiny::downloadButton('plot_1_download',"Download Figure")
             )
