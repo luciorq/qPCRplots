@@ -67,6 +67,7 @@ app_ui <- function() {
         shinydashboard::tabItem(
           tabName = "about",
           shiny::h2("qPCRplots package"),
+          shiny::h3(paste0("Package version: v", utils::packageVersion("qPCRplots"))),
           shiny::p("App developed by Lucio Rezende Queiroz"),
           shiny::em("Code available at: github.com/luciorq/qPCRplots")
         )
